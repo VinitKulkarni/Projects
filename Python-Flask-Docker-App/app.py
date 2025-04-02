@@ -8,15 +8,15 @@ def home():
 
 @app.route('/page1')
 def page1():
-    return render_template('page1.html')
+    return render_template('profession.html')
 
 @app.route('/page2')
 def page2():
-    return render_template('page2.html')
+    return render_template('travel.html')
 
 @app.route('/page3')
 def page3():
-    return render_template('page3.html')
+    return render_template('contactme.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
