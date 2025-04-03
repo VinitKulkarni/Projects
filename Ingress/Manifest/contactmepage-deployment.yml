@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contactmepage-deployment
+  labels:
+    app: contactmepage-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contactmepage-app
+  template:
+    metadata:
+      labels:
+        app: contactmepage-app
+    spec:
+      containers:
+      - name: contactmepage-container
+        image: vinitkulkarni/contactmepageimage:1.0
+        ports:
+        - containerPort: 80
