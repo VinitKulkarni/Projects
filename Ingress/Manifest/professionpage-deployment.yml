@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: professionpage-deployment
+  labels:
+    app: professionpage-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: professionpage-app
+  template:
+    metadata:
+      labels:
+        app: professionpage-app
+    spec:
+      containers:
+      - name: professionpage-container
+        image: vinitkulkarni/professionpageimage:1.0
+        ports:
+        - containerPort: 80
