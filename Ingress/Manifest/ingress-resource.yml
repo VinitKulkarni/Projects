@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "13.201.147.216.nip.io"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: homepage-svc
+            port:
+              number: 80
+      - path: /contactme
+        pathType: Prefix
+        backend:
+          service:
+            name: contactmepage-svc
+            port:
+              number: 80
+      - path: /profession
+        pathType: Prefix
+        backend:
+          service:
+            name: professionpage-svc
+            port:
+	      number: 80
