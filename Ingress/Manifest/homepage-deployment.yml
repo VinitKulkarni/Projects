@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage-deployment
+  labels:
+    app: homepage-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homepage-app
+  template:
+    metadata:
+      labels:
+        app: homepage-app
+    spec:
+      containers:
+      - name: homepage-container
+        image: vinitkulkarni/homepageimage:1.0
+        ports:
+        - containerPort: 80
