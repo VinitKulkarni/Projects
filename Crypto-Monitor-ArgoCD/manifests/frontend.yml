@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cryptomonitor-deployment
+  labels:
+    app: cryptomonitor-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cryptomonitor-app
+  template:
+    metadata:
+      labels:
+        app: cryptomonitor-app
+    spec:
+      containers:
+      - name: cryptomonitor-container
+        image: vinitkulkarni/crypto-monitor-img:15
+        ports:
+        - containerPort: 80
