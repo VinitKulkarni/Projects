@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('GIT PULL') {
+            steps {
+                git 'https://github.com/VinitKulkarni/Projects-ArgoCD'
+            }
+        }
+        
+        stage('SonarQube') {
+            steps {
+                echo "SonarQube test phase"
+            }
+        }
+        
+        stage('DeepSource') {
+            steps {
+                echo "DeepSource test phase"
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'The Crypto-Monitor-CI pipeline was successful!'
+            // Trigger the next pipeline after the current pipeline finishes successfully
+            build job: 'Crypto-Monitor-CD', wait: false  // Set wait to false so the current pipeline doesn't wait for the next one
+        }
+    }
+}
