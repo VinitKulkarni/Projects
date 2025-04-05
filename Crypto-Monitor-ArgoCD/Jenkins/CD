@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+    
+    environment {
+        // This will get the Jenkins build number dynamically
+        IMAGE_NAME = "vinitkulkarni/crypto-monitor-img"
+        TAG = "${BUILD_NUMBER}" // Jenkins build number
+    }
+
+    stages {
+        stage("Workspace cleanup"){
+            steps{
+                script{
+                    cleanWs()
+                    echo "clean up is DONE"
+                }
+            }
+        }
+        
+        stage('GIT PULL') {
+            steps {
+                git 'https://github.com/VinitKulkarni/Projects-ArgoCD'
+            }
+        }
+        
+        stage("Docker Image Build"){
+            steps{
+                script{
+                    echo "The current build number is :${BUILD_NUMBER}"
+                    sh 'docker build -t ${IMAGE_NAME}:${TAG} .'
+                }
+            }
+        }
+        
+        stage("Docker Hub login") {
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-login', passwordVariable: 'password', usernameVariable: 'username')]) {
+                        sh "docker login -u ${username} -p ${password}"
+                    }
+                }
+            }
+        }
+        
+        stage('Push Docker Image To DockerHub') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub
+                    sh "docker push ${IMAGE_NAME}:${TAG}"
+                }
+            }
+        }
+        
+        stage('git commit:build number change'){
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: 'github-cred', gitToolName: 'Default')]) {
+                    sh ''' 
+                        rm -rf $WORKSPACE/*
+                        git clone https://github.com/VinitKulkarni/Projects-ArgoCD.git
+                        cd Projects-ArgoCD/manifests
+                        pwd
+                        git checkout CI
+                        cp $WORKSPACE/Projects-ArgoCD/manifests/frontend.yml /tmp/
+                        sed -i "s|${IMAGE_NAME}:.*|${IMAGE_NAME}:${TAG}|g" /tmp/frontend.yml
+                        git checkout master
+                        cp -vf /tmp/frontend.yml $WORKSPACE/Projects-ArgoCD/manifests/frontend.yml
+                        git branch && ls -lrt
+            		        git status
+            		        git add .
+            		        git commit -m "Release ${BUILD_ID}"
+            		        git push -u origin master
+                    '''
+                }
+            }
+        }
+    }
+}
