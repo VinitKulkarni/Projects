@@ -1,17 +1,21 @@
-`This terraform script creates VPC with` <br>
-`One private subnet` <br>
-`One public subnet` <br>
-`One Route table for private subnet` <br>
-`One Route table for public subnet` <br>
-`One Internet gateway attached with Public Subnet` <br>
-`One Elastic ip for NAT gateway` <br>
-`One NAT gateway for private subnet` <br>
-`One EC2 in public subnet` <br>
-`One EC2 in private subnet` <br>
+``` shell
+This terraform script creates VPC with
+One private subnet
+One public subnet
+One Route table for private subnet
+One Route table for public subnet
+One Internet gateway attached with Public Subnet
+One Elastic ip for NAT gateway
+One NAT gateway for private subnet
+One EC2 in public subnet
+One EC2 in private subnet
+```
 
-`Commands:` <br>
-`terraform fmt` <br>
-`terraform init` <br>
-`terraform validate` <br>
-`terraform plan` <br>
-`terraform apply` <br>
+``` shell
+Commands:
+terraform fmt
+terraform init
+terraform validate
+terraform plan
+terraform apply
+```
