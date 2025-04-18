@@ -44,9 +44,10 @@ $ocker run --network mynetwork -d -p 3000:3000 grafana/grafana
 localhost:3000 (you can see grafana dashboard)
 
 Step-8:settings in grafana dashboard to see the mysql data
-hosturl=mydb:3306   #mysql container name
+``sh
+hosturl=mydb:3306   #mysql container name 
 databasename=project_db
 username=grafana
 password=grafanapassword
-
+```
 Test the connection
